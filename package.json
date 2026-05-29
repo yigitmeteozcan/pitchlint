@@ -1,0 +1,37 @@
+{
+  "name": "deckcheck",
+  "version": "0.1.0",
+  "description": "ESLint for pitch decks. Audit your fundraising packet and generate an agent-readable sidecar.",
+  "type": "module",
+  "bin": {
+    "deckcheck": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/"
+  ],
+  "scripts": {
+    "test": "node --test test/audit.test.js test/build.test.js"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1",
+    "yaml": "^2.7.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "pitch-deck",
+    "fundraising",
+    "startup",
+    "cli",
+    "audit",
+    "linter"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yigitmeteozcan/deckcheck.git"
+  }
+}

@@ -1,0 +1,47 @@
+# deck.yml — your fundraising packet in plain text
+# Run "deckcheck audit" to catch missing investor-critical info
+# Run "deckcheck build" to generate ./deck-agent/ (JSON + llms.txt + Markdown)
+
+company:
+  name:         ""               # Your company name
+  one_liner:    ""               # One sentence: what you do and for whom
+  category:     ""               # e.g. "B2B SaaS", "Marketplace", "Developer Tools"
+  stage:        ""               # e.g. "Pre-seed", "Seed", "Series A"
+  website:      ""               # https://...
+
+fundraising:
+  round:        ""               # e.g. "Seed", "Series A"
+  target_raise: ""               # e.g. "$2M", "$500K"
+  instrument:   ""               # e.g. "SAFE", "Priced round", "Convertible note"
+  use_of_funds:
+    - ""                         # e.g. "Hire 3 engineers (40%)"
+    - ""                         # e.g. "Sales & marketing (35%)"
+    - ""                         # e.g. "18 months runway (25%)"
+
+traction:
+  mrr:          ""               # e.g. "$42K", or omit if pre-revenue
+  mrr_date:     ""               # e.g. "2024-03" — required if mrr is set
+  growth_rate:  ""               # MUST include period: e.g. "14% MoM", "3x YoY"
+  customers:    ""               # e.g. "28 paying customers"
+  pilots:       ""               # e.g. "4 enterprise pilots"
+
+market:
+  icp:              ""           # Be specific: role + company-size + urgency
+  pain:             ""           # The problem they feel today
+  competitors:
+    - ""                         # e.g. "Salesforce"
+    - ""                         # e.g. "HubSpot"
+  differentiation:  ""           # Why you win vs. those competitors
+  market_size:      ""           # e.g. "$14B TAM"
+  market_size_source: ""         # e.g. "Gartner 2023", "IDC 2024"
+
+team:
+  - name:       ""               # Full name
+    role:        ""              # e.g. "CEO & Co-founder"
+    background:  ""              # Prior companies, exits, or domain expertise
+
+links:
+  docsend:   ""                  # https://docsend.com/view/...
+  demo:      ""                  # Loom, YouTube, or live-app URL (required)
+  calendly:  ""                  # https://calendly.com/...
+  contact:   ""                  # Founder email (required)

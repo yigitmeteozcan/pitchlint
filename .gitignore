@@ -1,0 +1,5 @@
+node_modules/
+deck-agent/
+deck.yml
+.DS_Store
+*.log

@@ -1,0 +1,57 @@
+# Example deck.yml — Fieldwire AI (fictional, for illustration)
+# This is what a well-filled fundraising packet looks like.
+# Run: deckcheck example | less
+
+company:
+  name:         "Fieldwire AI"
+  one_liner:    "AI-powered construction site management that turns daily field reports into real-time cost forecasts — before overruns happen."
+  category:     "Construction Tech / B2B SaaS"
+  stage:        "Seed"
+  website:      "https://fieldwire.ai"
+
+fundraising:
+  round:        "Seed"
+  target_raise: "$3M"
+  instrument:   "SAFE (post-money, $12M cap)"
+  use_of_funds:
+    - "Engineering — 4 hires, 12-month runway (45%)"
+    - "Sales & customer success — 2 AEs + 1 CSM (30%)"
+    - "Infrastructure & compliance (SOC 2 Type II) (15%)"
+    - "General & administrative (10%)"
+
+traction:
+  mrr:          "$38,000"
+  mrr_date:     "2024-03"
+  growth_rate:  "18% MoM"
+  customers:    "14 paying general contractors"
+  pilots:       "3 enterprise pilots (Skanska, Gilbane, Clark)"
+
+market:
+  icp:              "Project managers at US general contractors with 50–500 employees running $10M+ projects and losing margin to rework"
+  pain:             "Construction project managers spend 6+ hours/week manually reconciling field reports with budget sheets — errors surface weeks late, after the overrun is already baked in"
+  competitors:
+    - "Procore (project management — broad but not forecasting-focused)"
+    - "Autodesk Build (BIM-centric, too complex for mid-market GCs)"
+    - "Spreadsheets (default for 60% of the market)"
+  differentiation:  "Only solution that reads unstructured daily reports (voice, photo, PDF) and maps them to line-item budget impact in real time — Procore and Autodesk require manual data entry. Integrates with the 3 accounting systems GCs already use: Sage 300, Viewpoint, Foundation."
+  market_size:      "$8.2B TAM (US construction project management software)"
+  market_size_source: "JLL Research 2023 + IDC Construction Tech Report 2023"
+
+team:
+  - name:       "Maya Okonkwo"
+    role:        "CEO & Co-founder"
+    background:  "Ex-PM at Procore (Series B → IPO). Built the field-report product used by 50K GCs. Stanford CS."
+
+  - name:       "Raj Patel"
+    role:        "CTO & Co-founder"
+    background:  "Ex-Staff Eng at Palantir (construction vertical). Led the AEC data pipeline team. Carnegie Mellon CS/ML."
+
+  - name:       "Sofia Escobar"
+    role:        "VP Sales"
+    background:  "First enterprise AE at PlanGrid (acquired by Autodesk for $875M). Closed 3 of the 14 current accounts solo."
+
+links:
+  docsend:   "https://docsend.com/view/fieldwireai-seed-2024"
+  demo:      "https://loom.com/share/fieldwireai-demo-march24"
+  calendly:  "https://calendly.com/maya-fieldwireai/30min"
+  contact:   "maya@fieldwire.ai"
