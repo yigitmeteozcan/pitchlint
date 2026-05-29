@@ -6,7 +6,7 @@ export function generateDeckJson(deck) {
   const clean = JSON.parse(JSON.stringify(deck));
   return JSON.stringify(
     {
-      _schema: 'deckcheck/v1',
+      _schema: 'pitchlint/v1',
       _generated: new Date().toISOString(),
       ...clean,
     },

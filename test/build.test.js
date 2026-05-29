@@ -71,7 +71,7 @@ test('deck.json is valid parseable JSON', () => {
   const raw = readFileSync(resolve(TMP, 'deck-agent', 'deck.json'), 'utf8');
   let parsed;
   assert.doesNotThrow(() => { parsed = JSON.parse(raw); }, 'deck.json is not valid JSON');
-  assert.strictEqual(parsed._schema, 'deckcheck/v1');
+  assert.strictEqual(parsed._schema, 'pitchlint/v1');
   assert.strictEqual(parsed.company.name, 'BuildTest Co');
 
   rmSync(TMP, { recursive: true, force: true });

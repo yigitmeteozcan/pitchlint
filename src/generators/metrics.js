@@ -6,7 +6,7 @@ export function generateMetricsJson(deck) {
   const c = deck.company ?? {};
 
   const metrics = {
-    _schema: 'deckcheck-metrics/v1',
+    _schema: 'pitchlint-metrics/v1',
     _generated: new Date().toISOString(),
     company: String(c.name ?? ''),
     round: String(f.round ?? ''),

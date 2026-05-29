@@ -1,13 +1,13 @@
-# deckcheck
+# pitchlint
 
 Lint your pitch deck before investors do.
 
 A no-AI CLI that audits your fundraising packet for missing investor-critical info and generates an agent-readable sidecar (JSON + llms.txt + Markdown) for DocSend, data rooms, and AI/VC workflows.
 
 ```
-npx deckcheck audit
+npx pitchlint audit
 
-  deckcheck audit
+  pitchlint audit
 
   ✓ company.one_liner
   ✓ fundraising.target_raise
@@ -31,13 +31,13 @@ npx deckcheck audit
 No install required. Just run:
 
 ```bash
-npx deckcheck
+npx pitchlint
 ```
 
 Or install globally:
 
 ```bash
-npm install -g deckcheck
+npm install -g pitchlint
 ```
 
 ---
@@ -46,26 +46,26 @@ npm install -g deckcheck
 
 ```bash
 # 1. Create a blank deck.yml in your current directory
-npx deckcheck init
+npx pitchlint init
 
 # 2. Fill it in, then audit
-npx deckcheck audit
+npx pitchlint audit
 
 # 3. Generate the agent-readable sidecar
-npx deckcheck build
+npx pitchlint build
 
 # 4. See what a great deck.yml looks like
-npx deckcheck example
+npx pitchlint example
 ```
 
 ---
 
 ## Commands
 
-### `deckcheck init`
+### `pitchlint init`
 Creates `./deck.yml` from a blank template. Refuses to overwrite an existing file.
 
-### `deckcheck audit`
+### `pitchlint audit`
 Runs all rules against `deck.yml`. Prints grouped output:
 - `✓` passes (green)
 - `✖` errors (red) — each with a specific fix hint
@@ -73,7 +73,7 @@ Runs all rules against `deck.yml`. Prints grouped output:
 
 **Exit code 1** if any `error`-severity rule fails. This makes it usable in CI and as a pre-send git hook.
 
-### `deckcheck build`
+### `pitchlint build`
 Generates `./deck-agent/` with four files:
 
 ```
@@ -85,7 +85,7 @@ Generates `./deck-agent/` with four files:
 ```
 
 ```
-  deckcheck build ✓
+  pitchlint build ✓
 
   Generated files:
     ./deck-agent/llms.txt
@@ -100,7 +100,7 @@ Generates `./deck-agent/` with four files:
 
 Builds even if audit has errors so you can iterate freely.
 
-### `deckcheck example`
+### `pitchlint example`
 Prints a fully-filled example `deck.yml` to stdout. Good for copy-pasting as a starting point.
 
 ---
@@ -176,13 +176,13 @@ links:
 
 ## Honest limitations
 
-**deckcheck is a linter, not an AI.** All checks are pattern-matching and heuristics:
+**pitchlint is a linter, not an AI.** All checks are pattern-matching and heuristics:
 
 - A vague ICP like `"fast-growing startups in regulated industries"` will pass because it isn't on the blocklist. A human VC will see through it immediately.
 - Growth rate `"14% MoM"` passes the period check even if the 14% is fabricated.
 - The audit can't judge whether your one-liner is compelling, your market size is credible, or your team is fundable.
 
-What deckcheck *can* do: catch the mechanical mistakes that make investors close the tab before they get to the substance — missing asks, dateless MRR, undifferentiated market positions, no demo link.
+What pitchlint *can* do: catch the mechanical mistakes that make investors close the tab before they get to the substance — missing asks, dateless MRR, undifferentiated market positions, no demo link.
 
 Think of it as spell-check, not a writing coach.
 
@@ -205,13 +205,13 @@ Host `./deck-agent/` as a static directory at `yoursite.com/deck-agent/`.
 
 ```bash
 # .github/workflows/deck-audit.yml
-- run: npx deckcheck audit
+- run: npx pitchlint audit
 ```
 
 ```bash
 # .git/hooks/pre-push (chmod +x)
 #!/bin/sh
-npx deckcheck audit
+npx pitchlint audit
 ```
 
 Exit code 1 on any error means the push or CI run fails until the deck is clean.

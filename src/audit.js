@@ -94,7 +94,7 @@ export function printDetailedResults(deck, { errors, warnings, passes }) {
     console.log(pc.yellow('  Audit passed with warnings. Consider fixing them before sending.'));
     console.log('');
   } else {
-    console.log(pc.green('  All checks passed. Run "deckcheck build" to generate the agent sidecar.'));
+    console.log(pc.green('  All checks passed. Run "pitchlint build" to generate the agent sidecar.'));
     console.log('');
   }
 }

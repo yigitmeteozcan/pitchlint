@@ -35,7 +35,7 @@ export function loadDeck(filePath) {
   } catch (err) {
     if (err.code === 'ENOENT') {
       throw new Error(
-        `deck.yml not found at ${abs}\nRun "deckcheck init" to create one.`
+        `deck.yml not found at ${abs}\nRun "pitchlint init" to create one.`
       );
     }
     throw new Error(`Could not read ${abs}: ${err.message}`);

@@ -1,6 +1,6 @@
 # Example deck.yml — Fieldwire AI (fictional, for illustration)
 # This is what a well-filled fundraising packet looks like.
-# Run: deckcheck example | less
+# Run: pitchlint example | less
 
 company:
   name:         "Fieldwire AI"

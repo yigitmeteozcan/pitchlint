@@ -16,7 +16,7 @@ const COMMANDS = ['init', 'audit', 'build', 'example', 'help'];
 
 function printHelp() {
   console.log('');
-  console.log(pc.bold('  deckcheck') + pc.dim(' — ESLint for pitch decks'));
+  console.log(pc.bold('  pitchlint') + pc.dim(' — ESLint for pitch decks'));
   console.log('');
   console.log('  ' + pc.bold('Commands:'));
   console.log('    ' + pc.cyan('init') + '      Create a blank deck.yml in the current directory');
@@ -26,9 +26,9 @@ function printHelp() {
   console.log('    ' + pc.cyan('help') + '      Show this help message');
   console.log('');
   console.log('  ' + pc.bold('Usage:'));
-  console.log('    npx deckcheck init');
-  console.log('    npx deckcheck audit');
-  console.log('    npx deckcheck build');
+  console.log('    npx pitchlint init');
+  console.log('    npx pitchlint audit');
+  console.log('    npx pitchlint build');
   console.log('');
 }
 
@@ -45,7 +45,7 @@ function cmdInit() {
   try {
     content = readFileSync(template, 'utf8');
   } catch {
-    console.error(pc.red('  Could not read template file. Try reinstalling deckcheck.'));
+    console.error(pc.red('  Could not read template file. Try reinstalling pitchlint.'));
     process.exit(1);
   }
 
@@ -59,7 +59,7 @@ function cmdInit() {
   console.log('');
   console.log(pc.green('  ✓ deck.yml created'));
   console.log('');
-  console.log('  Fill it in, then run: ' + pc.cyan('deckcheck audit'));
+  console.log('  Fill it in, then run: ' + pc.cyan('pitchlint audit'));
   console.log('');
 }
 
@@ -75,7 +75,7 @@ function cmdAudit() {
   }
 
   console.log('');
-  console.log(pc.bold('  deckcheck audit'));
+  console.log(pc.bold('  pitchlint audit'));
 
   const results = runAudit(deck);
   printDetailedResults(deck, results);
@@ -99,7 +99,7 @@ function cmdBuild() {
   if (errors.length > 0) {
     console.log('');
     console.log(pc.yellow(`  ⚠ Building sidecar with ${errors.length} unresolved issue${errors.length > 1 ? 's' : ''}.`));
-    console.log(pc.yellow('  Run "deckcheck audit" to see what\'s missing.'));
+    console.log(pc.yellow('  Run "pitchlint audit" to see what\'s missing.'));
   }
 
   let result;
@@ -113,7 +113,7 @@ function cmdBuild() {
   }
 
   console.log('');
-  console.log(pc.bold('  deckcheck build') + pc.green(' ✓'));
+  console.log(pc.bold('  pitchlint build') + pc.green(' ✓'));
   console.log('');
   console.log('  Generated files:');
   for (const f of result.written) {
@@ -139,7 +139,7 @@ function cmdExample() {
   try {
     content = readFileSync(example, 'utf8');
   } catch {
-    console.error(pc.red('  Could not read example file. Try reinstalling deckcheck.'));
+    console.error(pc.red('  Could not read example file. Try reinstalling pitchlint.'));
     process.exit(1);
   }
 

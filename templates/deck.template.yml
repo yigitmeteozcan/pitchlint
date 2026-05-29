@@ -1,6 +1,6 @@
 # deck.yml — your fundraising packet in plain text
-# Run "deckcheck audit" to catch missing investor-critical info
-# Run "deckcheck build" to generate ./deck-agent/ (JSON + llms.txt + Markdown)
+# Run "pitchlint audit" to catch missing investor-critical info
+# Run "pitchlint build" to generate ./deck-agent/ (JSON + llms.txt + Markdown)
 
 company:
   name:         ""               # Your company name

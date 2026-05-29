@@ -1,10 +1,10 @@
 {
-  "name": "deckcheck",
+  "name": "pitchlint",
   "version": "0.1.0",
   "description": "Lint your pitch deck before investors do — a no-AI CLI that audits your fundraising packet and generates an agent-readable sidecar (JSON + llms.txt + Markdown).",
   "type": "module",
   "bin": {
-    "deckcheck": "bin/cli.js"
+    "pitchlint": "bin/cli.js"
   },
   "files": [
     "bin/",
