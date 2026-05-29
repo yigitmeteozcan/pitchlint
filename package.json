@@ -1,37 +1,48 @@
 {
   "name": "deckcheck",
   "version": "0.1.0",
-  "description": "ESLint for pitch decks. Audit your fundraising packet and generate an agent-readable sidecar.",
+  "description": "Lint your pitch deck before investors do — a no-AI CLI that audits your fundraising packet and generates an agent-readable sidecar (JSON + llms.txt + Markdown).",
   "type": "module",
   "bin": {
-    "deckcheck": "./bin/cli.js"
+    "deckcheck": "bin/cli.js"
   },
   "files": [
     "bin/",
     "src/",
-    "templates/"
+    "templates/",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
-    "test": "node --test test/audit.test.js test/build.test.js"
+    "test": "node --test"
   },
   "dependencies": {
     "picocolors": "^1.1.1",
     "yaml": "^2.7.1"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18"
   },
   "keywords": [
     "pitch-deck",
     "fundraising",
+    "vc",
     "startup",
+    "llms-txt",
     "cli",
-    "audit",
-    "linter"
+    "linter",
+    "deck",
+    "investor",
+    "ai-agents"
   ],
   "license": "MIT",
+  "author": "Yigit Mete Ozcan",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yigitmeteozcan/deckcheck.git"
-  }
+    "url": "git+https://github.com/yigitmeteozcan/deckcheck.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yigitmeteozcan/deckcheck/issues"
+  },
+  "homepage": "https://github.com/yigitmeteozcan/deckcheck#readme"
 }
