@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+process.stdout.on('error', (e) => { if (e.code === 'EPIPE') process.exit(0); });
+process.stderr.on('error', (e) => { if (e.code === 'EPIPE') process.exit(0); });
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
