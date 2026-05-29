@@ -8,7 +8,7 @@ function safe(v, fallback = '') {
 
 function safeList(arr, fallback = 'Not provided') {
   if (!Array.isArray(arr) || arr.length === 0) return fallback;
-  return arr.map((item) => `- ${safe(item)}`).join('\n');
+  return arr.map((item) => `  - ${safe(item)}`).join('\n');
 }
 
 export function generateLlmsTxt(deck) {
