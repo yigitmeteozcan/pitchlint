@@ -1,6 +1,6 @@
 {
   "name": "pitchlint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lint your pitch deck before investors do — a no-AI CLI that audits your fundraising packet and generates an agent-readable sidecar (JSON + llms.txt + Markdown).",
   "type": "module",
   "bin": {
@@ -39,10 +39,10 @@
   "author": "Yigit Mete Ozcan",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yigitmeteozcan/deckcheck.git"
+    "url": "git+https://github.com/yigitmeteozcan/pitchlint.git"
   },
   "bugs": {
-    "url": "https://github.com/yigitmeteozcan/deckcheck/issues"
+    "url": "https://github.com/yigitmeteozcan/pitchlint/issues"
   },
-  "homepage": "https://github.com/yigitmeteozcan/deckcheck#readme"
+  "homepage": "https://github.com/yigitmeteozcan/pitchlint#readme"
 }
