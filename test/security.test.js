@@ -42,8 +42,6 @@ test('path traversal: malicious company.name stays inside deck-agent/', () => {
   assert.ok(existsSync(agentDir), 'deck-agent dir should exist');
   const files = readdirSync(agentDir);
   assert.ok(files.length > 0, 'deck-agent should contain files');
-
-  // Confirm nothing escaped to parent directories
   assert.ok(!existsSync(resolve(TMP, '..', 'etc', 'evil')), 'Must not escape to ../../etc/evil');
   assert.ok(!existsSync(resolve(TMP, 'etc', 'evil')), 'Must not escape to etc/evil');
 });
@@ -80,6 +78,51 @@ test('JSON safety: metrics.json with special chars is valid JSON', () => {
   deck.company.name = '"quoted" <name>';
   const json = generateMetricsJson(deck);
   assert.doesNotThrow(() => JSON.parse(json));
+});
+
+test('deck.json only includes known schema keys — no extra field leakage', () => {
+  const deck = JSON.parse(JSON.stringify(baseDeck));
+  deck.__secret = 'cap-table-internal';
+  deck.internal_notes = 'pre-money $4M';
+
+  const json = generateDeckJson(deck);
+  const parsed = JSON.parse(json);
+  assert.ok(!Object.prototype.hasOwnProperty.call(parsed, '__secret'), 'Extra key must not appear in deck.json');
+  assert.ok(!Object.prototype.hasOwnProperty.call(parsed, 'internal_notes'), 'Extra key must not appear in deck.json');
+});
+
+// ── Markdown injection ────────────────────────────────────────────────────────
+
+test('pipe character in field is escaped in llms.txt output', () => {
+  const deck = JSON.parse(JSON.stringify(baseDeck));
+  deck.company.name = 'Foo | Bar';
+  const output = generateLlmsTxt(deck);
+  assert.ok(!output.includes('Foo | Bar'), 'Raw pipe must not appear in output');
+  assert.ok(output.includes('Foo \\| Bar'), 'Pipe must be escaped as \\|');
+});
+
+test('pipe character in field is escaped in investor-summary.md output', () => {
+  const deck = JSON.parse(JSON.stringify(baseDeck));
+  deck.market.icp = 'SMBs | Enterprises';
+  const output = generateSummaryMd(deck);
+  assert.ok(output.includes('SMBs \\| Enterprises'), 'Pipe must be escaped in table cell');
+});
+
+test('newline in field is collapsed to space in output', () => {
+  const deck = JSON.parse(JSON.stringify(baseDeck));
+  deck.company.one_liner = 'Line one\nLine two\rLine three';
+  const llms = generateLlmsTxt(deck);
+  const summary = generateSummaryMd(deck);
+  assert.ok(!llms.includes('\nLine two'), 'Embedded newlines must not pass through to llms.txt');
+  assert.ok(!summary.includes('\nLine two'), 'Embedded newlines must not pass through to summary.md');
+});
+
+test('Markdown link in field has bracket escaped', () => {
+  const deck = JSON.parse(JSON.stringify(baseDeck));
+  deck.company.name = '[click here](https://evil.com)';
+  const output = generateLlmsTxt(deck);
+  // [ must be escaped so it doesn't render as a link
+  assert.ok(output.includes('\\[click here'), 'Opening bracket must be escaped');
 });
 
 // ── Wrong-type resilience ─────────────────────────────────────────────────────
@@ -159,7 +202,6 @@ test('static scan: no eval/Function()/require()/fetch/http/child_process in src/
 test('YAML unknown tag parses inert or throws cleanly — no code execution', () => {
   mkdirSync(TMP, { recursive: true });
   const f = resolve(TMP, 'tagged.yml');
-  // !!js/eval was exploitable in js-yaml v3; yaml v2 should not execute it
   writeFileSync(f, 'company:\n  name: !!unknown "hello"\n', 'utf8');
 
   let deck = null;
@@ -171,13 +213,8 @@ test('YAML unknown tag parses inert or throws cleanly — no code execution', ()
   }
 
   if (error) {
-    // A clean YAML parse error is the acceptable outcome
-    assert.ok(
-      typeof error.message === 'string',
-      'Error should have a message string',
-    );
+    assert.ok(typeof error.message === 'string', 'Error should have a message string');
   } else {
-    // Parsed — verify it returned a plain object, not executed code
     assert.strictEqual(typeof deck, 'object');
     assert.ok(deck !== null);
   }
@@ -196,13 +233,11 @@ test('YAML !!js/eval tag does not execute code', () => {
     error = err;
   }
 
-  // As long as the process is still running here, !!js/eval did NOT execute.
-  // Either a parse error or an inert parsed value is acceptable.
   if (error) {
     assert.ok(typeof error.message === 'string');
   } else {
     assert.ok(deck !== null);
   }
-  // If we reach this assertion, process.exit(99) was not called — safe.
+  // Reaching here means process.exit(99) was NOT called.
   assert.ok(true, 'Process still running — !!js/eval was not executed');
 });

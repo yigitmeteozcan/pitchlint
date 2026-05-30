@@ -2,7 +2,11 @@
 
 function safe(v, fallback = 'Not provided') {
   if (v === null || v === undefined) return fallback;
-  return String(v).replace(/[<>]/g, '');
+  return String(v)
+    .replace(/[<>]/g, '')
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/\|/g, '\\|')
+    .replace(/\[/g, '\\[');
 }
 
 function safeList(arr, fallback = 'Not specified') {

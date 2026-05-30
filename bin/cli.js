@@ -152,8 +152,8 @@ function cmdExample() {
     } else if (/^[\w_]+:/.test(trimmed)) {
       const colonIdx = line.indexOf(':');
       process.stdout.write(
-        pc.cyan(line.slice(0, colonIdx + line.length - line.trimStart().length - trimmed.length + colonIdx)) +
-        line.slice(colonIdx + (line.length - line.trimStart().length - trimmed.length + colonIdx)) + '\n'
+        pc.cyan(line.slice(0, colonIdx + 1)) +
+        line.slice(colonIdx + 1) + '\n'
       );
     } else if (trimmed.startsWith('-')) {
       process.stdout.write(pc.yellow(line) + '\n');
@@ -165,7 +165,7 @@ function cmdExample() {
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
-const [,, cmd, ...args] = process.argv;
+const [,, cmd] = process.argv;
 
 if (!cmd || cmd === 'help' || cmd === '--help' || cmd === '-h') {
   printHelp();

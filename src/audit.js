@@ -26,29 +26,6 @@ export function runAudit(deck) {
   return { errors, warnings, passes };
 }
 
-export function printResults({ errors, warnings, passes }, { silent = false } = {}) {
-  if (silent) return;
-
-  if (passes.length > 0) {
-    for (const rule of passes) {
-      console.log(pc.green(`  ✓ ${rule.id}`));
-    }
-  }
-
-  if (warnings.length > 0) {
-    for (const rule of warnings) {
-      // We need the deck to generate the message; caller passes deck separately
-      console.log(pc.yellow(`  ⚠ ${rule.id}`));
-    }
-  }
-
-  if (errors.length > 0) {
-    for (const rule of errors) {
-      console.log(pc.red(`  ✖ ${rule.id}`));
-    }
-  }
-}
-
 export function printDetailedResults(deck, { errors, warnings, passes }) {
   if (passes.length > 0) {
     console.log('');

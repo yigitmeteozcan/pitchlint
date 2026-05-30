@@ -69,3 +69,32 @@ test('50k-char field value is truncated to 2000', () => {
   const deck = loadDeck(f);
   assert.strictEqual(deck.company.name.length, 2000);
 });
+
+test('file exceeding 512 KB throws size error', () => {
+  // Write a 520 KB YAML file
+  const big = 'x'.repeat(520 * 1024);
+  const f = writeTmp('huge.yml', `company:\n  name: "${big}"\n`);
+  assert.throws(
+    () => loadDeck(f),
+    (err) => err.message.includes('too large'),
+  );
+});
+
+test('array with more than 100 items is truncated to 100', () => {
+  const items = Array.from({ length: 150 }, (_, i) => `item${i}`);
+  const yaml = 'fundraising:\n  use_of_funds:\n' + items.map((i) => `    - ${i}`).join('\n') + '\n';
+  const f = writeTmp('bigarray.yml', yaml);
+  const deck = loadDeck(f);
+  assert.strictEqual(deck.fundraising.use_of_funds.length, 100);
+});
+
+test('deeply nested YAML (25 levels) does not stack-overflow', () => {
+  // Build YAML: level0:\n  level1:\n    level2: ... value: deep
+  let yaml = '';
+  for (let i = 0; i < 25; i++) {
+    yaml += '  '.repeat(i) + `level${i}:\n`;
+  }
+  yaml += '  '.repeat(25) + 'value: deep\n';
+  const f = writeTmp('deep.yml', yaml);
+  assert.doesNotThrow(() => loadDeck(f), 'Should not stack-overflow on deeply nested YAML');
+});

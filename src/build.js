@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'fs';
+import { mkdirSync, writeFileSync, realpathSync } from 'fs';
 import { resolve, join } from 'path';
 import { runAudit } from './audit.js';
 import { generateLlmsTxt } from './generators/llms.js';
@@ -9,10 +9,9 @@ import { generateSummaryMd } from './generators/summary.js';
 const OUTPUT_DIR = 'deck-agent';
 
 function safeWrite(dir, filename, content) {
-  // Resolve final path and verify it stays inside dir — no traversal from deck data.
   const outPath = resolve(join(dir, filename));
   const base = resolve(dir);
-  if (!outPath.startsWith(base + '/') && outPath !== base) {
+  if (!outPath.startsWith(base + '/')) {
     throw new Error(`Path traversal detected: ${outPath} is outside ${base}`);
   }
   writeFileSync(outPath, content, 'utf8');
@@ -22,7 +21,6 @@ function safeWrite(dir, filename, content) {
 export function buildSidecar(deck, cwd = process.cwd()) {
   const outDir = resolve(cwd, OUTPUT_DIR);
 
-  // Security: outDir must be inside cwd.
   const cwdResolved = resolve(cwd);
   if (!outDir.startsWith(cwdResolved + '/') && outDir !== cwdResolved) {
     throw new Error(`Output directory ${outDir} would be outside cwd ${cwdResolved}`);
@@ -31,6 +29,13 @@ export function buildSidecar(deck, cwd = process.cwd()) {
   const { errors } = runAudit(deck);
 
   mkdirSync(outDir, { recursive: true });
+
+  // Guard against symlinks redirecting deck-agent/ outside cwd.
+  const realOut = realpathSync(outDir);
+  const realCwd = realpathSync(cwdResolved);
+  if (!realOut.startsWith(realCwd + '/') && realOut !== realCwd) {
+    throw new Error(`deck-agent/ resolves outside cwd via symlink: ${realOut}`);
+  }
 
   const files = [
     { name: 'llms.txt', content: generateLlmsTxt(deck) },
