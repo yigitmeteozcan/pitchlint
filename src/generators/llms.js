@@ -17,7 +17,7 @@ export function generateLlmsTxt(deck) {
   const t = deck.traction ?? {};
   const m = deck.market ?? {};
   const links = deck.links ?? {};
-  const team = deck.team ?? [];
+  const team = Array.isArray(deck.team) ? deck.team : [];
 
   const teamLines = team.map((member) => {
     const name = safe(member?.name, 'Unknown');
